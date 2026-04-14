@@ -1,0 +1,176 @@
+Salvage AI Classifier — Junker EV Ecosystem
+
+Repo: salvage-ai-classifier
+
+""" Goal: Computer vision + ML system for identifying and classifying salvaged EV components:
+
+Battery packs/modules
+
+Electric motors
+
+Inverters/controllers
+
+Wiring harnesses
+
+
+Outputs:
+
+component_type
+
+condition_score
+
+usability_class """
+
+
+==============================
+
+📁 Project Structure (logical)
+
+==============================
+
+""" salvage-ai-classifier/ │ ├── README.md ├── requirements.txt │ ├── dataset/ │   ├── labels.json │   ├── sample_images/ │ ├── model/ │   ├── train.py │   ├── infer.py │   ├── model.py │   ├── transforms.py │ ├── vision/ │   ├── detector.py │   ├── feature_extractor.py │   ├── classifier.py │ ├── utils/ │   ├── image_loader.py │   ├── logger.py │   ├── metrics.py │ └── demo.py """
+
+==============================
+
+📄 README.md
+
+==============================
+
+README = """
+
+Salvage AI Classifier
+
+AI system for identifying usable EV components from junkyard imagery.
+
+What it does
+
+Detects EV-related hardware in scrapyard images
+
+Classifies component type
+
+Estimates condition and reuse potential
+
+
+Output Classes
+
+BATTERY_PACK
+
+BATTERY_MODULE
+
+ELECTRIC_MOTOR
+
+INVERTER
+
+WIRING_HARNESS
+
+SCRAP
+
+
+Philosophy
+
+We assume nothing is labeled. Everything must be inferred from visual + structural patterns.
+
+Run
+
+python demo.py """
+
+==============================
+
+🧠 model/model.py
+
+==============================
+
+class SalvageClassifier: def init(self): self.classes = [ "BATTERY_PACK", "BATTERY_MODULE", "ELECTRIC_MOTOR", "INVERTER", "WIRING_HARNESS", "SCRAP" ]
+
+def predict(self, features):
+    """
+    Placeholder logic model (replace with CNN/ViT later)
+    """
+    score = sum(features) % len(self.classes)
+    return {
+        "class": self.classes[int(score)],
+        "confidence": 0.72
+    }
+
+==============================
+
+👁 vision/feature_extractor.py
+
+==============================
+
+import numpy as np
+
+def extract_features(image_array): """ Fake feature extractor placeholder. Replace with CNN / ViT embeddings. """ return [ np.mean(image_array), np.std(image_array), np.max(image_array) / 255.0 ]
+
+==============================
+
+🧠 vision/classifier.py
+
+==============================
+
+from model.model import SalvageClassifier from vision.feature_extractor import extract_features
+
+class VisionPipeline: def init(self): self.model = SalvageClassifier()
+
+def run(self, image):
+    features = extract_features(image)
+    return self.model.predict(features)
+
+==============================
+
+🧪 model/infer.py
+
+==============================
+
+import numpy as np from vision.classifier import VisionPipeline
+
+pipeline = VisionPipeline()
+
+def infer(image_array): result = pipeline.run(image_array) return result
+
+if name == "main": fake_image = np.random.randint(0, 255, (64, 64)) print(infer(fake_image))
+
+==============================
+
+🏋 model/train.py
+
+==============================
+
+""" Placeholder training loop. Replace with PyTorch / TensorFlow training pipeline. """
+
+def train(): print("Training Salvage AI Classifier...") print("(placeholder - integrate dataset + CNN here)")
+
+if name == "main": train()
+
+==============================
+
+📦 utils/image_loader.py
+
+==============================
+
+import numpy as np
+
+def load_image(path): """ Placeholder loader. Replace with OpenCV or PIL. """ return np.random.randint(0, 255, (64, 64))
+
+==============================
+
+📊 utils/metrics.py
+
+==============================
+
+def accuracy(preds, labels): correct = sum(p == l for p, l in zip(preds, labels)) return correct / len(labels) if labels else 0
+
+==============================
+
+🚀 demo.py
+
+==============================
+
+from model.infer import infer import numpy as np
+
+if name == "main": print("Running Salvage AI Demo")
+
+fake_image = np.random.randint(0, 255, (64, 64))
+
+result = infer(fake_image)
+print("Prediction:", result)
